@@ -1,11 +1,8 @@
 import './App.css';
 import {useState} from "react";
 import MovieForm from "./components/MovieForm/MovieForm";
-
-interface Movie {
-    id: string;
-    name: string;
-}
+import {Movie} from "./types";
+import MoviesList from "./components/MoviesList/MoviesList";
 
 const App = () => {
     const [movies, setMovies] = useState<Movie[]>([]);
@@ -40,23 +37,17 @@ const App = () => {
                 return movie;
             });
         });
-    }
+    };
 
     return (
         <div className="App">
             <MovieForm onSubmit={addNewMovie} />
             <h2>Too watch lit</h2>
-            {movies.map((movie) => (
-                <div className="row" key={movie.id}>
-                    <input
-                        type="text"
-                        value={movie.name}
-                        onChange={(e) => changeMovie(e.target.value, movie.id)}
-                    />
-                    <button onClick={() => removeMovie(movie.id)}>remove</button>
-                </div>
-            ))}
-
+            <MoviesList
+                movies={movies}
+                onChange={changeMovie}
+                onRemove={removeMovie}
+            />
         </div>
     );
 };
