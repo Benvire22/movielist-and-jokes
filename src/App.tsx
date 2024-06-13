@@ -1,11 +1,29 @@
 import './App.css';
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import MovieForm from "./components/MovieForm/MovieForm";
-import {Movie} from "./types";
+import {Joke, Movie} from "./types";
 import MoviesList from "./components/MoviesList/MoviesList";
+import JokeBlock from "./components/JokeBlock/JokeBlock";
 
 const App = () => {
     const [movies, setMovies] = useState<Movie[]>([]);
+    const [joke, setJoke] = useState<string>('');
+    const [newJoke, setNewJoke] = useState<boolean>(true);
+
+    useEffect(() => {
+        const request = async () => {
+            const response = await fetch('https://api.chucknorris.io/jokes/random');
+
+            if (response.ok) {
+                const jokeData: Joke = await  response.json();
+
+                const joke = jokeData.value;
+                setJoke(joke);
+            }
+
+        };
+        void request();
+    }, [newJoke]);
 
     const addNewMovie = (movie: string) => {
         setMovies(prevState => {
@@ -39,6 +57,10 @@ const App = () => {
         });
     };
 
+    const getNewJoke = () => {
+        setNewJoke(prevState => !prevState);
+    };
+
     return (
         <div className="App">
             <MovieForm onSubmit={addNewMovie} />
@@ -48,6 +70,7 @@ const App = () => {
                 onChange={changeMovie}
                 onRemove={removeMovie}
             />
+            <JokeBlock joke={joke} getNewJoke={getNewJoke} />
         </div>
     );
 };
