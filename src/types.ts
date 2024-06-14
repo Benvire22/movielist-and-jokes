@@ -1,14 +1,14 @@
 export interface Movie {
-    id: string;
-    name: string;
+  id: string;
+  name: string;
 }
 
 export interface Joke {
-    "categories": string[],
-    "created_at":string,
-    "icon_url":string,
-    "id":string,
-    "updated_at":string,
-    "url":string,
-    "value":string
+  'categories': string[],
+  'created_at': string,
+  'icon_url': string,
+  'id': string,
+  'updated_at': string,
+  'url': string,
+  'value': string
 }
