@@ -5,16 +5,6 @@ import {Joke, Movie} from "./types";
 import MoviesList from "./components/MoviesList/MoviesList";
 import JokeBlock from "./components/JokeBlock/JokeBlock";
 
-// const localData = () => {
-//     let array: Movie[] = [];
-//
-//     if (localStorage.getItem('movies')) {
-//         array = JSON.parse(localStorage.getItem('movies'));
-//     }
-//
-//     return
-// }
-
 const App = () => {
     const [movies, setMovies] = useState<Movie[]>([]);
     const [joke, setJoke] = useState<string>('');
@@ -35,27 +25,42 @@ const App = () => {
         void request();
     }, [newJoke]);
 
+    useEffect(() => {
+        let moviesList: Movie[] = [];
+        try {
+            moviesList = JSON.parse(localStorage.getItem('movies') || '[]');
+            console.log(moviesList);
+            setMovies(moviesList);
+        } catch (e) {
+            setMovies(moviesList);
+        }
+    }, []);
+
     const addNewMovie = (movie: string) => {
         setMovies(prevState => {
-            return [
+            const copyMovies = [
                 ...prevState,
                 {
                     id: Math.random().toString(),
                     name: movie,
                 }
             ];
+            localStorage.setItem('movies', JSON.stringify(copyMovies));
+            return copyMovies;
         });
     };
 
     const removeMovie = (id: string) => {
         setMovies(prevState => {
-            return  prevState.filter((movie) => movie.id !== id);
+            const copyMovies =  prevState.filter((movie) => movie.id !== id);
+            localStorage.setItem('movies', JSON.stringify(copyMovies));
+            return copyMovies;
         });
     };
 
     const changeMovie = (value: string, id: string) => {
         setMovies(prevState => {
-            return  prevState.map((movie) => {
+            const copyMovies =  prevState.map((movie) => {
                 if (movie.id === id) {
                     return {
                         ...movie,
@@ -64,6 +69,8 @@ const App = () => {
                 }
                 return movie;
             });
+            localStorage.setItem('movies', JSON.stringify(copyMovies));
+            return copyMovies;
         });
     };
 
