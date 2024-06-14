@@ -5,6 +5,16 @@ import {Joke, Movie} from "./types";
 import MoviesList from "./components/MoviesList/MoviesList";
 import JokeBlock from "./components/JokeBlock/JokeBlock";
 
+// const localData = () => {
+//     let array: Movie[] = [];
+//
+//     if (localStorage.getItem('movies')) {
+//         array = JSON.parse(localStorage.getItem('movies'));
+//     }
+//
+//     return
+// }
+
 const App = () => {
     const [movies, setMovies] = useState<Movie[]>([]);
     const [joke, setJoke] = useState<string>('');

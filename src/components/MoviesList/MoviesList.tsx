@@ -16,7 +16,7 @@ const MoviesList: React.FC<Props> = ({movies, onChange, onRemove}) => {
                     key={movie.id}
                     name={movie.name}
                     id={movie.id}
-                    onRemove={onRemove}
+                    onRemove={() => onRemove(movie.id)}
                     onChange={onChange}
                 />
             ))}
