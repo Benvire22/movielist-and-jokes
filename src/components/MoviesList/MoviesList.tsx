@@ -9,9 +9,9 @@ interface Props {
 }
 
 const MoviesList: React.FC<Props> = ({movies, onChange, onRemove}) => {
-  return (
-    <div className="row d-flex justify-content-center mb-3">
-      <h2>Too watch list</h2>
+
+  const movieList = (
+    <>
       {movies.map((movie) => (
         <MovieItem
           key={movie.id}
@@ -21,6 +21,13 @@ const MoviesList: React.FC<Props> = ({movies, onChange, onRemove}) => {
           onChange={onChange}
         />
       ))}
+    </>
+  );
+
+  return (
+    <div className="row d-flex justify-content-center mb-3">
+      <h2 className="mb-4 text-primary">Too watch list:</h2>
+      {movies.length > 0 ? movieList : <h4 className="text-secondary">Empty! Add new film here</h4>}
     </div>
   );
 };

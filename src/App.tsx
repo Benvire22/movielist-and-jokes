@@ -5,6 +5,8 @@ import MoviesList from './components/MoviesList/MoviesList';
 import JokeBlock from './components/JokeBlock/JokeBlock';
 import './App.css';
 
+const chuckNorrisJokesUrl = 'https://api.chucknorris.io/jokes/random'
+
 const App = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [joke, setJoke] = useState<string>('');
@@ -12,15 +14,17 @@ const App = () => {
 
   useEffect(() => {
     const request = async () => {
-      const response = await fetch('https://api.chucknorris.io/jokes/random');
+      try {
+        const response = await fetch(chuckNorrisJokesUrl);
 
-      if (response.ok) {
-        const jokeData: Joke = await response.json();
-
-        const joke = jokeData.value;
-        setJoke(joke);
+        if (response.ok) {
+          const jokeData: Joke = await response.json();
+          const joke = jokeData.value;
+          setJoke(joke);
+        }
+      } catch (e) {
+        setJoke('Sorry there wa!');
       }
-
     };
     void request();
   }, [newJoke]);

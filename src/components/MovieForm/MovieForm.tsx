@@ -25,7 +25,7 @@ const MovieForm: React.FC<Props> = ({onSubmit}) => {
           type="text"
           onChange={changeMovieField}
           value={movieField}
-          placeholder="Enter movie"
+          placeholder="Enter movie you want watch"
           required
         />
         <button className="btn btn-primary rounded" type="submit">Add new film</button>
